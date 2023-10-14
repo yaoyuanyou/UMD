@@ -1,2 +1,2 @@
-# INST630
-University of Maryland Master Program Course
+# University of Maryland-College Park MIM
+University of Maryland Master Program of Information Management.
