@@ -1,0 +1,36 @@
+USE ap;
+/*Answer 1*/
+SELECT CONCAT(vendor_contact_last_name, ", ", vendor_contact_first_name) AS vendor_contact_name,
+	CONCAT(vendor_city, ", ",  vendor_state, " ", vendor_zip_code) AS vendor_address,
+	CONCAT("Tel #: ", vendor_phone) AS vendor_phone_number
+FROM vendors
+ORDER BY vendor_contact_first_name ASC;
+
+USE ex;
+/*Answer 2*/
+SELECT projects.project_number,
+	departments.department_name,
+    CONCAT(employees.first_name, ", ", employees.last_name) AS employee_name
+FROM projects
+LEFT JOIN employees
+ON projects.employee_id = employees.employee_id
+LEFT JOIN departments
+ON employees.department_number = departments.department_number
+ORDER BY employees.last_name ASC;
+
+USE om;
+/*Answer 3*/
+SELECT CONCAT(customers.customer_last_name, ", ", customers.customer_first_name) AS customer_name,
+	orders.order_id AS order_id,
+	items.artist AS artist,
+    items.title AS title,
+    orders.shipped_date AS shipped_date,
+    CONCAT("Tel #: ", customers.customer_phone) AS customer_phone_number
+FROM customers
+LEFT JOIN orders
+ON customers.customer_id = orders.customer_id
+LEFT JOIN order_details
+ON orders.order_id = order_details.order_id
+LEFT JOIN items
+ON order_details.item_id = items.item_id
+ORDER BY shipped_date;

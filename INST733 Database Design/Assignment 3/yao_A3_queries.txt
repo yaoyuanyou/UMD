@@ -1,0 +1,29 @@
+/*Question 1*/
+USE my_guitar_shop;
+DROP TABLE IF EXISTS categories_copy;
+DROP TABLE IF EXISTS products_copy;
+CREATE TABLE categories_copy SELECT * FROM categories;
+CREATE TABLE products_copy SELECT * FROM products;
+
+/*Question 2*/
+INSERT INTO addresses (customer_id, line1, line2, city, state, zip_code, phone, disabled) VALUES (4, '12723 Sinclair St.', 'Apt 11', 'Rockville', 'MD', '20850', '301-636-8989',0);
+
+/*Question 3*/
+INSERT INTO orders (customer_id, order_date, ship_amount, tax_amount, ship_date, ship_address_id, card_type, card_number, card_expires, billing_address_id)
+VALUES (4, '2020-01-13 11:27:31', 5, 12.12, CURRENT_TIMESTAMP, 13, 'Visa', 7890127890123456, '07/2020', 6);
+
+/*Question 4*/
+UPDATE orders
+SET tax_amount = 6.60, card_type = 'MasterCard'
+WHERE order_id = 10;
+
+/*Question 5*/
+UPDATE addresses
+SET disabled = 1
+WHERE state = 'NJ';
+
+/*Question 6*/
+DELETE FROM orders
+WHERE ship_address_id = 13;
+DELETE FROM addresses
+WHERE address_id = 13;

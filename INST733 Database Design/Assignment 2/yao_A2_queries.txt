@@ -1,0 +1,48 @@
+USE my_guitar_shop;
+
+/*Answer 1*/
+SELECT categories.category_name AS 'Product Category',
+	SUM(order_items.quantity) AS 'Number Purchased',
+    MAX(products.list_price) AS 'Max List Price',
+    MIN(products.list_price) AS 'Min List Price',
+    concat('$', FORMAT(AVG(products.list_price), 2)) AS 'Average List Price'
+FROM categories
+LEFT JOIN products ON products.category_id = categories.category_id
+LEFT JOIN order_items ON order_items.product_id = products.product_id
+LEFT JOIN orders ON orders.order_id = order_items.order_id
+GROUP BY ROLLUP (categories.category_name)
+ORDER BY categories.category_name IS NULL;
+
+/*Answer 2*/
+SELECT products.product_name,
+	categories.category_name,
+    products.list_price AS 'products_list_price'
+FROM products
+LEFT JOIN categories ON products.category_id = categories.category_id
+LEFT JOIN (SELECT AVG(products.list_price) AS average, products.category_id
+			FROM products
+            GROUP BY products.category_id) a
+ON products.category_id = a.category_id
+WHERE products.list_price > a.average
+ORDER BY products.list_price DESC, products.product_name ASC;
+
+
+/*Answer 3*/
+SELECT CONCAT(customers.first_name, ' ', customers.last_name) AS 'customer_name',
+	customers.email_address AS 'customer_email',
+	CONCAT(addresses.city, ', ', addresses.state) AS 'customer_city',
+    COUNT(*) AS 'num_orders',
+    MAX(a.most_recent) AS 'most_recent'
+FROM orders b
+LEFT JOIN (SELECT COUNT(*) AS 'num_orders',
+			orders.customer_id,
+			MAX(orders.order_date) AS 'most_recent'
+			FROM orders
+            WHERE orders.ship_date IS NOT NULL
+            GROUP BY orders.customer_id
+			) a
+ON b.order_date = a.most_recent
+LEFT JOIN customers ON b.customer_id = customers.customer_id
+LEFT JOIN addresses ON customers.shipping_address_id = addresses.address_id
+GROUP BY b.customer_id
+ORDER BY most_recent;
