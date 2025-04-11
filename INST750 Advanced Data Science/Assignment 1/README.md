@@ -10,6 +10,7 @@ The dataset contains 5,572 English SMS messages, which are tagged ham (legitimat
 # Methods
 After data preprocessing and cleaning, the data is highly **IMBALANCED** and will deal this issue.
 ![Label Distribution](https://github.com/yaoyuanyou/UMD/blob/288660b71bdf08501fb8f2fa54120f0478a065d4/INST750%20Advanced%20Data%20Science/Assignment%201/img/label-dist.png)
+
 In the evaluation phase, I prioritize **recall** because spam message contains links that will steal personal information. If fraudulent text messages are not detected, there is an additional risk of personal information being leaked. Therefore, recall is used as the metrics to evaluate and tune models performances.
 
 # RoBERTa Model
@@ -24,6 +25,7 @@ I also built **LSTM** and **SVM** as baselines to compare with the state-of-art 
 |   recall  |  090 |   0.98  | 0.85 |
 | f1 score  | 0.93 | 0.99    | 0.91 |
 | roc_auc   | 0.98 | 1.00    | 0.97 |
+
 Here is a visualized **ROC Curve**:
 ![ROC Curve Comparison](https://github.com/yaoyuanyou/UMD/blob/288660b71bdf08501fb8f2fa54120f0478a065d4/INST750%20Advanced%20Data%20Science/Assignment%201/img/models-eval.png)
 
